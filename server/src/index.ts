@@ -12,23 +12,35 @@ const app = new Elysia()
 // Connect to MongoDB
 connect()
   .then(() => {
-    console.log('Connected to MongoDB')
+    console.log('\x1b[32m', 'Connected to MongoDB')
 
     // Invoke fetchAndStoreRaceMeetings immediately
     raceMeetingService
       .fetchAndStoreRaceMeetings()
-      .then(() => console.log('Initial race meetings fetch completed'))
+      .then(() =>
+        console.log('\x1b[33m', 'Initial race meetings fetch completed')
+      )
       .catch((error) =>
-        console.error('Error in initial race meetings fetch:', error)
+        console.error(
+          '\x1b[31m',
+          'Error in initial race meetings fetch:',
+          error
+        )
       )
 
     // Schedule daily fetch at 8:00 AM
     cron.schedule('0 8 * * *', () => {
       raceMeetingService
         .fetchAndStoreRaceMeetings()
-        .then(() => console.log('Daily race meetings fetch completed'))
+        .then(() =>
+          console.log('\x1b[33m', 'Daily race meetings fetch completed')
+        )
         .catch((error) =>
-          console.error('Error in daily race meetings fetch:', error)
+          console.error(
+            '\x1b[31m',
+            'Error in daily race meetings fetch:',
+            error
+          )
         )
     })
 
@@ -43,10 +55,10 @@ connect()
     // Start the server
     const port = process.env.PORT || 5000
     app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`)
+      console.log('\x1b[36m', `Server is running on http://localhost:${port}`)
     })
   })
   .catch((error) => {
-    console.error('Failed to connect to MongoDB:', error)
+    console.error('\x1b[31m', 'Failed to connect to MongoDB:', error)
     process.exit(1)
   })
