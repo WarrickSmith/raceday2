@@ -4,7 +4,7 @@ import { raceMeetingService } from '../services/raceMeetingService'
 const raceMeetingRoutes = new Elysia({ prefix: '/race-meetings' })
 
 raceMeetingRoutes
-  .get('/fetch', async ({ set }) => {
+  .get('/fetch-and-store', async ({ set }) => {
     try {
       const result = await raceMeetingService.fetchAndStoreRaceMeetings()
       set.status = 200
@@ -18,6 +18,22 @@ raceMeetingRoutes
       return { message: 'Error fetching and storing race meetings' }
     }
   })
+
+  .get('/alltoday', async ({ set }) => {
+    try {
+      const result = await raceMeetingService.getAllTodaysData()
+      set.status = 200
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        'Successfully fetched all race meetings,races and runners for today'
+      )
+      return result
+    } catch (error) {
+      set.status = 500
+      return { message: 'Error fetching and storing race meetings' }
+    }
+  })
+
   .get('/', async ({ set }) => {
     try {
       const raceMeetings = await raceMeetingService.getAllRaceMeetings()
@@ -29,9 +45,11 @@ raceMeetingRoutes
       return { message: 'Error fetching race meetings' }
     }
   })
+
   .get('/today', async ({ set }) => {
     try {
       const raceMeetings = await raceMeetingService.getTodaysRaceMeetings()
+      console.log(raceMeetings)
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
@@ -43,9 +61,11 @@ raceMeetingRoutes
       return { message: "Error fetching today's race meetings" }
     }
   })
+
   .get('/:id', async ({ params, set }) => {
     try {
       const raceMeeting = await raceMeetingService.getRaceMeetingById(params.id)
+      console.log(raceMeeting)
       if (!raceMeeting) {
         set.status = 404
         return { message: 'Race meeting not found' }
@@ -61,6 +81,7 @@ raceMeetingRoutes
       return { message: 'Error fetching race meeting' }
     }
   })
+
   .post('/', async ({ body, set }) => {
     try {
       const newRaceMeeting = await raceMeetingService.createRaceMeeting(body)
@@ -72,6 +93,7 @@ raceMeetingRoutes
       return { message: 'Error creating race meeting' }
     }
   })
+
   .put('/:id', async ({ params, body, set }) => {
     try {
       const updatedRaceMeeting = await raceMeetingService.updateRaceMeeting(
@@ -93,6 +115,7 @@ raceMeetingRoutes
       return { message: 'Error updating race meeting' }
     }
   })
+
   .delete('/:id', async ({ params, set }) => {
     try {
       const deleted = await raceMeetingService.deleteRaceMeeting(params.id)

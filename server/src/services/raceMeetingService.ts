@@ -76,16 +76,7 @@ export const raceMeetingService = {
     }
   },
 
-  getAllRaceMeetings: async () => {
-    return await RaceMeeting.find().populate({
-      path: 'races',
-      populate: {
-        path: 'runners',
-      },
-    })
-  },
-
-  getTodaysRaceMeetings: async () => {
+  getAllTodaysData: async () => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
     const tomorrow = new Date(today)
@@ -100,14 +91,41 @@ export const raceMeetingService = {
       },
     })
   },
+  getAllRaceMeetings: async () => {
+    return await RaceMeeting.find()
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
+  },
+
+  getTodaysRaceMeetings: async () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+
+    return await RaceMeeting.find({
+      date: { $gte: today, $lt: tomorrow },
+    })
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
+  },
 
   getRaceMeetingById: async (id: string) => {
-    return await RaceMeeting.findById(id).populate({
-      path: 'races',
-      populate: {
-        path: 'runners',
-      },
-    })
+    return await RaceMeeting.findById(id)
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
   },
 
   createRaceMeeting: async (data: any) => {
