@@ -13,6 +13,13 @@ export const raceMeetingService = {
       const data = response.data
 
       for (const meeting of data.meetings) {
+        console.log(
+          `Saving...  ${meeting.name}  Type: ${meeting.type}  Country: ${meeting.country}`
+        )
+        if (meeting.id === null) {
+          continue
+        }
+
         const raceMeeting = await RaceMeeting.findOneAndUpdate(
           { id: meeting.id, date: new Date(data.date) },
           {
@@ -33,6 +40,10 @@ export const raceMeetingService = {
         )
 
         for (const raceData of meeting.races) {
+          if (raceData.id === null) {
+            continue
+          }
+
           const race = await Race.findOneAndUpdate(
             { id: raceData.id, raceMeeting: raceMeeting._id },
             {
