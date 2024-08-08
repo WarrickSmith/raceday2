@@ -18,7 +18,12 @@ connect()
     raceMeetingService
       .fetchAndStoreRaceMeetings()
       .then(() =>
-        console.log('\x1b[33m', 'Initial race meetings fetch completed')
+        console.log(
+          '\x1b[33m',
+          `${
+            new Date().toISOString().split('T')[0]
+          } Initial race meetings fetch completed`
+        )
       )
       .catch((error) =>
         console.error(
@@ -33,7 +38,12 @@ connect()
       raceMeetingService
         .fetchAndStoreRaceMeetings()
         .then(() =>
-          console.log('\x1b[33m', 'Daily race meetings fetch completed')
+          console.log(
+            '\x1b[33m',
+            `${
+              new Date().toISOString().split('T')[0]
+            } Daily race meetings fetch completed`
+          )
         )
         .catch((error) =>
           console.error(
