@@ -13,6 +13,13 @@ export const raceMeetingService = {
       const data = response.data
 
       for (const meeting of data.meetings) {
+        console.log(
+          `Saving...  ${meeting.name}  Type: ${meeting.type}  Country: ${meeting.country}`
+        )
+        if (meeting.id === null) {
+          continue
+        }
+
         const raceMeeting = await RaceMeeting.findOneAndUpdate(
           { id: meeting.id, date: new Date(data.date) },
           {
@@ -33,6 +40,10 @@ export const raceMeetingService = {
         )
 
         for (const raceData of meeting.races) {
+          if (raceData.id === null) {
+            continue
+          }
+
           const race = await Race.findOneAndUpdate(
             { id: raceData.id, raceMeeting: raceMeeting._id },
             {
@@ -76,22 +87,56 @@ export const raceMeetingService = {
     }
   },
 
-  getAllRaceMeetings: async () => {
-    return await RaceMeeting.find().populate({
+  getAllTodaysData: async () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+
+    return await RaceMeeting.find({
+      date: { $gte: today, $lt: tomorrow },
+    }).populate({
       path: 'races',
       populate: {
         path: 'runners',
       },
     })
   },
+  getAllRaceMeetings: async () => {
+    return await RaceMeeting.find()
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
+  },
+
+  getTodaysRaceMeetings: async () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+
+    return await RaceMeeting.find({
+      date: { $gte: today, $lt: tomorrow },
+    })
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
+  },
 
   getRaceMeetingById: async (id: string) => {
-    return await RaceMeeting.findById(id).populate({
-      path: 'races',
-      populate: {
-        path: 'runners',
-      },
-    })
+    return await RaceMeeting.findById(id)
+    // .populate({
+    //   path: 'races',
+    //   populate: {
+    //     path: 'runners',
+    //   },
+    // })
   },
 
   createRaceMeeting: async (data: any) => {
