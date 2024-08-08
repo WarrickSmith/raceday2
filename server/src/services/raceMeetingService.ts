@@ -14,7 +14,13 @@ export const raceMeetingService = {
 
       for (const meeting of data.meetings) {
         console.log(
-          `Saving...  ${meeting.name}  Type: ${meeting.type}  Country: ${meeting.country}`
+          '\x1b[92mSaving...  Country: ' +
+            meeting.country +
+            '  Type: ' +
+            meeting.type +
+            '  ' +
+            meeting.name +
+            '\x1b[0m'
         )
         if (meeting.id === null) {
           continue
