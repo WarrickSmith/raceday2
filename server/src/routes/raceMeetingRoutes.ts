@@ -49,7 +49,6 @@ raceMeetingRoutes
   .get('/today', async ({ set }) => {
     try {
       const raceMeetings = await raceMeetingService.getTodaysRaceMeetings()
-      console.log(raceMeetings)
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
@@ -65,7 +64,6 @@ raceMeetingRoutes
   .get('/:id', async ({ params, set }) => {
     try {
       const raceMeeting = await raceMeetingService.getRaceMeetingById(params.id)
-      console.log(raceMeeting)
       if (!raceMeeting) {
         set.status = 404
         return { message: 'Race meeting not found' }
