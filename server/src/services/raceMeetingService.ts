@@ -14,7 +14,7 @@ export const raceMeetingService = {
 
       for (const meeting of data.meetings) {
         console.log(
-          '\x1b[92mSaving...  Country: ' +
+          '\x1b[92m  Saving...  Country: ' +
             meeting.country +
             '  Type: ' +
             meeting.type +
