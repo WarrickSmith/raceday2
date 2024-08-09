@@ -21,7 +21,9 @@ connect()
         console.log(
           '\x1b[33m',
           `${
-            new Date().toISOString().split('T')[0]
+            new Date()
+              .toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })
+              .split(',')[0]
           } Initial race meetings fetch completed`
         )
       )
@@ -41,7 +43,9 @@ connect()
           console.log(
             '\x1b[33m',
             `${
-              new Date().toISOString().split('T')[0]
+              new Date()
+                .toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })
+                .split(',')[0]
             } Daily race meetings fetch completed`
           )
         )
