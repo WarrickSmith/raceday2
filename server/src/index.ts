@@ -1,7 +1,7 @@
 import { Elysia } from 'elysia'
 import { connect } from './config/database'
 import raceMeetingRoutes from './routes/raceMeetingRoutes'
-// import raceRoutes from './routes/raceRoutes'
+import raceRoutes from './routes/raceRoutes'
 // import runnerRoutes from './routes/runnerRoutes'
 import { errorHandler } from './utils/errorHandler'
 import { raceMeetingService } from './services/raceMeetingService'
@@ -60,7 +60,7 @@ connect()
 
     // Set up routes
     app.use(raceMeetingRoutes)
-    // app.use(raceRoutes)
+    app.use(raceRoutes)
     // app.use(runnerRoutes)
 
     // Error handling
