@@ -16,7 +16,6 @@ const convertRacesToNZTime = (races: IRace[]) => {
 export const raceService = {
   getAllRaces: async () => {
     const races = await Race.find()
-    console.log('#all races: ', races.length)
     return convertRacesToNZTime(races)
   },
 

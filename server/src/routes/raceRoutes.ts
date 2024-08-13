@@ -8,6 +8,7 @@ raceRoutes
     try {
       const races = await raceService.getAllRaces()
       set.status = 200
+      console.log('\x1b[35m%s\x1b[0m', ' ✅ Successfully fetched all races')
       return races
     } catch (error) {
       set.status = 500
@@ -21,6 +22,10 @@ raceRoutes
       try {
         const races = await raceService.getRacesByMeetingId(params.meetingId)
         set.status = 200
+        console.log(
+          '\x1b[35m%s\x1b[0m',
+          ` ✅ Successfully fetched races for meeting: ${params.meetingId}`
+        )
         return races
       } catch (error) {
         set.status = 500
@@ -44,6 +49,10 @@ raceRoutes
           return { message: 'Race not found' }
         }
         set.status = 200
+        console.log(
+          '\x1b[35m%s\x1b[0m',
+          ` ✅ Successfully fetched race: ${params.id}`
+        )
         return race
       } catch (error) {
         set.status = 500
@@ -61,6 +70,7 @@ raceRoutes
     try {
       const races = await raceService.getTodaysRaces()
       set.status = 200
+      console.log('\x1b[35m%s\x1b[0m', " ✅ Successfully fetched today's races")
       return races
     } catch (error) {
       set.status = 500

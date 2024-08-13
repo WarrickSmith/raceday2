@@ -12,7 +12,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        'Successfully fetched and stored race meetings'
+        ' ✅ Successfully fetched and stored race meetings'
       )
       return result
     } catch (error) {
@@ -45,7 +45,7 @@ raceMeetingRoutes
 
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully fetched all ${raceMeetingsCount} race meetings, ${racesCount} races and ${runnersCount} runners for today`
+        ` ✅ Successfully fetched all ${raceMeetingsCount} race meetings, ${racesCount} races and ${runnersCount} runners for today`
       )
       return result
     } catch (error) {
@@ -60,7 +60,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully fetched all ${raceMeetings.length} race meetings`
+        ` ✅ Successfully fetched all ${raceMeetings.length} race meetings`
       )
       return raceMeetings
     } catch (error) {
@@ -75,7 +75,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully fetched ${raceMeetings.length} race meetings for today`
+        ` ✅ Successfully fetched ${raceMeetings.length} race meetings for today`
       )
       return raceMeetings
     } catch (error) {
@@ -94,9 +94,9 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully fetched race meeting with id ${params.id}`
+        ` ✅ Successfully fetched race meeting with id ${params.id}`
       )
-      return raceMeeting
+      return raceMeeting.toJSON()
     } catch (error) {
       set.status = 500
       return { message: 'Error fetching race meeting' }
@@ -107,7 +107,10 @@ raceMeetingRoutes
     try {
       const newRaceMeeting = await raceMeetingService.createRaceMeeting(body)
       set.status = 201
-      console.log('\x1b[35m%s\x1b[0m', 'Successfully created new race meeting')
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        ' ✅ Successfully created new race meeting'
+      )
       return newRaceMeeting
     } catch (error) {
       set.status = 500
@@ -128,7 +131,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully updated race meeting with id ${params.id}`
+        ` ✅ Successfully updated race meeting with id ${params.id}`
       )
       return updatedRaceMeeting
     } catch (error) {
@@ -147,7 +150,7 @@ raceMeetingRoutes
       set.status = 204
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully deleted race meeting with id ${params.id}`
+        ` ✅ Successfully deleted race meeting with id ${params.id}`
       )
       return null
     } catch (error) {

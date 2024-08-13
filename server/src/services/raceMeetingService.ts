@@ -14,13 +14,7 @@ export const raceMeetingService = {
 
       for (const meeting of data.meetings) {
         console.log(
-          '\x1b[92m  Saving...  Country: ' +
-            meeting.country +
-            '  Type: ' +
-            meeting.type +
-            '  ' +
-            meeting.name +
-            '\x1b[0m'
+          `\x1b[92m  Saving...  Country: ${meeting.country}  Type: ${meeting.type}  ${meeting.name}\x1b[0m`
         )
         if (meeting.id === null) {
           continue
@@ -110,12 +104,6 @@ export const raceMeetingService = {
   },
   getAllRaceMeetings: async () => {
     return await RaceMeeting.find()
-    // .populate({
-    //   path: 'races',
-    //   populate: {
-    //     path: 'runners',
-    //   },
-    // })
   },
 
   getTodaysRaceMeetings: async () => {
@@ -127,22 +115,10 @@ export const raceMeetingService = {
     return await RaceMeeting.find({
       date: { $gte: today, $lt: tomorrow },
     })
-    // .populate({
-    //   path: 'races',
-    //   populate: {
-    //     path: 'runners',
-    //   },
-    // })
   },
 
   getRaceMeetingById: async (id: string) => {
     return await RaceMeeting.findById(id)
-    // .populate({
-    //   path: 'races',
-    //   populate: {
-    //     path: 'runners',
-    //   },
-    // })
   },
 
   createRaceMeeting: async (data: any) => {
