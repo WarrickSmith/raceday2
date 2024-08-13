@@ -1,7 +1,9 @@
 import { Elysia } from 'elysia'
 import { raceMeetingService } from '../services/raceMeetingService'
+import { IRunner } from '../models/Runner'
+import { IRace } from '../models/Race'
 
-const raceMeetingRoutes = new Elysia({ prefix: '/race-meetings' })
+const raceMeetingRoutes = new Elysia({ prefix: '/meetings' })
 
 raceMeetingRoutes
   .get('/fetch-and-store', async ({ set }) => {
@@ -10,7 +12,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        'Successfully fetched and stored race meetings'
+        ' ✅ Successfully fetched and stored race meetings'
       )
       return result
     } catch (error) {
@@ -23,9 +25,27 @@ raceMeetingRoutes
     try {
       const result = await raceMeetingService.getAllTodaysData()
       set.status = 200
+      const raceMeetingsCount = result.length
+      const racesCount = result.reduce(
+        (acc, meeting) => acc + meeting.races.length,
+        0
+      )
+      const runnersCount = result.reduce(
+        (acc, meeting) =>
+          acc +
+          meeting.races.reduce(
+            (rAcc, race) =>
+              rAcc +
+              ((race as unknown as IRace).runners as unknown as IRunner[])
+                .length,
+            0
+          ),
+        0
+      )
+
       console.log(
         '\x1b[35m%s\x1b[0m',
-        'Successfully fetched all race meetings,races and runners for today'
+        ` ✅ Successfully fetched all ${raceMeetingsCount} race meetings, ${racesCount} races and ${runnersCount} runners for today`
       )
       return result
     } catch (error) {
@@ -38,7 +58,10 @@ raceMeetingRoutes
     try {
       const raceMeetings = await raceMeetingService.getAllRaceMeetings()
       set.status = 200
-      console.log('\x1b[35m%s\x1b[0m', 'Successfully fetched all race meetings')
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        ` ✅ Successfully fetched all ${raceMeetings.length} race meetings`
+      )
       return raceMeetings
     } catch (error) {
       set.status = 500
@@ -52,7 +75,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        "Successfully fetched today's race meetings"
+        ` ✅ Successfully fetched ${raceMeetings.length} race meetings for today`
       )
       return raceMeetings
     } catch (error) {
@@ -71,9 +94,9 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully fetched race meeting with id ${params.id}`
+        ` ✅ Successfully fetched race meeting with id ${params.id}`
       )
-      return raceMeeting
+      return raceMeeting.toJSON()
     } catch (error) {
       set.status = 500
       return { message: 'Error fetching race meeting' }
@@ -84,7 +107,10 @@ raceMeetingRoutes
     try {
       const newRaceMeeting = await raceMeetingService.createRaceMeeting(body)
       set.status = 201
-      console.log('\x1b[35m%s\x1b[0m', 'Successfully created new race meeting')
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        ' ✅ Successfully created new race meeting'
+      )
       return newRaceMeeting
     } catch (error) {
       set.status = 500
@@ -105,7 +131,7 @@ raceMeetingRoutes
       set.status = 200
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully updated race meeting with id ${params.id}`
+        ` ✅ Successfully updated race meeting with id ${params.id}`
       )
       return updatedRaceMeeting
     } catch (error) {
@@ -124,7 +150,7 @@ raceMeetingRoutes
       set.status = 204
       console.log(
         '\x1b[35m%s\x1b[0m',
-        `Successfully deleted race meeting with id ${params.id}`
+        ` ✅ Successfully deleted race meeting with id ${params.id}`
       )
       return null
     } catch (error) {
