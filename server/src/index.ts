@@ -2,7 +2,7 @@ import { Elysia } from 'elysia'
 import { connect } from './config/database'
 import raceMeetingRoutes from './routes/raceMeetingRoutes'
 import raceRoutes from './routes/raceRoutes'
-// import runnerRoutes from './routes/runnerRoutes'
+import runnerRoutes from './routes/runnerRoutes'
 import { errorHandler } from './utils/errorHandler'
 import { raceMeetingService } from './services/raceMeetingService'
 import cron from 'node-cron'
@@ -61,7 +61,7 @@ connect()
     // Set up routes
     app.use(raceMeetingRoutes)
     app.use(raceRoutes)
-    // app.use(runnerRoutes)
+    app.use(runnerRoutes)
 
     // Error handling
     app.onError((error) => errorHandler(error))
