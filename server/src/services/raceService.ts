@@ -1,45 +1,77 @@
 import Race, { IRace } from '../models/Race'
-import Runner from '../models/Runner'
-import { Schema } from 'mongoose'
-import { Elysia } from 'elysia'
+
+const convertToNZTime = (utcDate: Date) => {
+  return new Date(utcDate).toLocaleString('en-NZ', {
+    timeZone: 'Pacific/Auckland',
+  })
+}
+
+const convertRacesToNZTime = (races: IRace[]) => {
+  return races.map((race) => ({
+    ...race.toObject(),
+    norm_time: convertToNZTime(race.norm_time),
+  }))
+}
 
 export const raceService = {
   getAllRaces: async () => {
-    return await Race.find()
+    const races = await Race.find()
+    console.log('#all races: ', races.length)
+    return convertRacesToNZTime(races)
   },
 
   getRacesByMeetingId: async (meetingId: string) => {
-    return await Race.find({ raceMeeting: meetingId })
+    const races = await Race.find({ raceMeeting: meetingId })
+    return convertRacesToNZTime(races)
   },
 
   getTodaysRaces: async () => {
-    const nzOptions = { timeZone: 'Pacific/Auckland' }
-    const nzToday = new Date(new Date().toLocaleString('en-NZ', nzOptions))
-    nzToday.setHours(0, 0, 0, 0)
-    const nzTomorrow = new Date(nzToday)
-    nzTomorrow.setDate(nzTomorrow.getDate() + 1)
+    const today = new Date()
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0))
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999))
 
-    return await Race.find({
+    const races = await Race.find({
       norm_time: {
-        $gte: new Date(nzToday.toUTCString()),
-        $lt: new Date(nzTomorrow.toUTCString()),
+        $gte: startOfDay.toISOString(),
+        $lt: endOfDay.toISOString(),
       },
     })
+
+    console.log("#today's races: ", races.length)
+    return convertRacesToNZTime(races)
   },
 
   getRaceById: async (id: string) => {
-    return await Race.findById(id).populate('runners')
+    const race = await Race.findById(id).populate('runners')
+    if (race) {
+      return {
+        ...race.toObject(),
+        norm_time: convertToNZTime(race.norm_time),
+      }
+    }
+    return null
   },
 
   createRace: async (data: any) => {
     const race = new Race(data)
-    return await race.save()
+    const savedRace = await race.save()
+    return {
+      ...savedRace.toObject(),
+      norm_time: convertToNZTime(savedRace.norm_time),
+    }
   },
 
   updateRace: async (id: string, data: any) => {
-    return await Race.findByIdAndUpdate(id, data, {
+    const updatedRace = await Race.findByIdAndUpdate(id, data, {
       new: true,
     })
+    if (updatedRace) {
+      return {
+        ...updatedRace.toObject(),
+        norm_time: convertToNZTime(updatedRace.norm_time),
+      }
+    }
+    return null
   },
 
   deleteRace: async (id: string) => {

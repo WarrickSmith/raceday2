@@ -1,23 +1,14 @@
 import { Elysia, t } from 'elysia'
 import { raceService } from '../services/raceService'
 
-const convertToNZTime = (utcDate: Date) => {
-  return new Date(utcDate).toLocaleString('en-NZ', {
-    timeZone: 'Pacific/Auckland',
-  })
-}
-
 const raceRoutes = new Elysia({ prefix: '/races' })
+
 raceRoutes
   .get('/', async ({ set }) => {
     try {
       const races = await raceService.getAllRaces()
-      const formattedRaces = races.map((race) => ({
-        ...race.toObject(),
-        norm_time: convertToNZTime(race.norm_time),
-      }))
       set.status = 200
-      return formattedRaces
+      return races
     } catch (error) {
       set.status = 500
       return { message: 'Error fetching races' }
@@ -39,6 +30,29 @@ raceRoutes
     {
       params: t.Object({
         meetingId: t.String(),
+      }),
+    }
+  )
+
+  .get(
+    '/:id',
+    async ({ params, set }) => {
+      try {
+        const race = await raceService.getRaceById(params.id)
+        if (!race) {
+          set.status = 404
+          return { message: 'Race not found' }
+        }
+        set.status = 200
+        return race
+      } catch (error) {
+        set.status = 500
+        return { message: 'Error fetching race' }
+      }
+    },
+    {
+      params: t.Object({
+        id: t.String(),
       }),
     }
   )

@@ -1,7 +1,7 @@
 import { Elysia } from 'elysia'
 import { raceMeetingService } from '../services/raceMeetingService'
 
-const raceMeetingRoutes = new Elysia({ prefix: '/race-meetings' })
+const raceMeetingRoutes = new Elysia({ prefix: '/meetings' })
 
 raceMeetingRoutes
   .get('/fetch-and-store', async ({ set }) => {
