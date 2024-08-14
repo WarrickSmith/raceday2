@@ -17,6 +17,9 @@ export const raceMeetingService = {
           `\x1b[92m  Saving...  Country: ${meeting.country}  Type: ${meeting.type}  ${meeting.name}\x1b[0m`
         )
         if (meeting.id === null) {
+          console.log(
+            `\x1b[31m  Error: Meeting ID is null. Skipping... Country: ${meeting.country}  Type: ${meeting.type}  ${meeting.name}\x1b[0m`
+          )
           continue
         }
 
