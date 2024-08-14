@@ -26,6 +26,24 @@ raceMeetingRoutes
       detail: {
         summary: 'Fetch and store todays race meetings',
         tags: ['Meetings'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MeetingArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )

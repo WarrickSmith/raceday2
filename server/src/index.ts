@@ -76,6 +76,24 @@ connect()
             { name: 'Races', description: 'Race endpoints' },
             { name: 'Runners', description: 'Runner endpoints' },
           ],
+          components: {
+            schemas: {
+              Error: {
+                type: 'object',
+                properties: {
+                  message: { type: 'string' },
+                },
+              },
+              Meeting: {
+                type: 'object',
+                // Define properties of a Meeting
+              },
+              MeetingArray: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/Meeting' },
+              },
+            },
+          },
         },
       })
     )
