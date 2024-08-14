@@ -29,6 +29,10 @@ runnerRoutes
       params: t.Object({
         id: t.String(),
       }),
+      detail: {
+        summary: 'Fetch a single runner by the runner ID',
+        tags: ['Runners'],
+      },
     }
   )
 
@@ -52,6 +56,10 @@ runnerRoutes
       params: t.Object({
         raceId: t.String(),
       }),
+      detail: {
+        summary: 'Fetch all runners for a single race by the race ID',
+        tags: ['Runners'],
+      },
     }
   )
 

@@ -4,20 +4,29 @@ import { raceService } from '../services/raceService'
 const raceRoutes = new Elysia({ prefix: '/races' })
 
 raceRoutes
-  .get('/', async ({ set }) => {
-    try {
-      const races = await raceService.getAllRaces()
-      set.status = 200
-      console.log(
-        '\x1b[35m%s\x1b[0m',
-        ` ✅ Successfully fetched ${races.length} races`
-      )
-      return races
-    } catch (error) {
-      set.status = 500
-      return { message: 'Error fetching races' }
+  .get(
+    '/',
+    async ({ set }) => {
+      try {
+        const races = await raceService.getAllRaces()
+        set.status = 200
+        console.log(
+          '\x1b[35m%s\x1b[0m',
+          ` ✅ Successfully fetched ${races.length} races`
+        )
+        return races
+      } catch (error) {
+        set.status = 500
+        return { message: 'Error fetching races' }
+      }
+    },
+    {
+      detail: {
+        summary: 'Fetch all races in the database',
+        tags: ['Races'],
+      },
     }
-  })
+  )
 
   .get(
     '/meeting/:meetingId',
@@ -39,6 +48,10 @@ raceRoutes
       params: t.Object({
         meetingId: t.String(),
       }),
+      detail: {
+        summary: 'Fetch all races for a meeting by the meeting ID',
+        tags: ['Races'],
+      },
     }
   )
 
@@ -66,22 +79,35 @@ raceRoutes
       params: t.Object({
         id: t.String(),
       }),
+      detail: {
+        summary: 'Fetch a single race by the race ID',
+        tags: ['Races'],
+      },
     }
   )
 
-  .get('/today', async ({ set }) => {
-    try {
-      const races = await raceService.getTodaysRaces()
-      set.status = 200
-      console.log(
-        '\x1b[35m%s\x1b[0m',
-        ` ✅ Successfully fetched today's ${races.length} races`
-      )
-      return races
-    } catch (error) {
-      set.status = 500
-      return { message: "Error fetching today's races" }
+  .get(
+    '/today',
+    async ({ set }) => {
+      try {
+        const races = await raceService.getTodaysRaces()
+        set.status = 200
+        console.log(
+          '\x1b[35m%s\x1b[0m',
+          ` ✅ Successfully fetched today's ${races.length} races`
+        )
+        return races
+      } catch (error) {
+        set.status = 500
+        return { message: "Error fetching today's races" }
+      }
+    },
+    {
+      detail: {
+        summary: 'Fetch all races for today',
+        tags: ['Races'],
+      },
     }
-  })
+  )
 
 export default raceRoutes

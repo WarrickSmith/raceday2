@@ -1,4 +1,5 @@
 import { Elysia } from 'elysia'
+import { swagger } from '@elysiajs/swagger'
 import { connect } from './config/database'
 import raceMeetingRoutes from './routes/raceMeetingRoutes'
 import raceRoutes from './routes/raceRoutes'
@@ -57,6 +58,27 @@ connect()
           )
         )
     })
+
+    //Set up Open API Documentation on /swagger... with scalar UI
+    app.use(
+      swagger({
+        path: '/docs',
+        scalarConfig: {
+          theme: 'solarized',
+        },
+        documentation: {
+          info: {
+            title: 'Race Day API Documentation',
+            version: '1.0.0',
+          },
+          tags: [
+            { name: 'Meetings', description: 'Meeting endpoints' },
+            { name: 'Races', description: 'Race endpoints' },
+            { name: 'Runners', description: 'Runner endpoints' },
+          ],
+        },
+      })
+    )
 
     // Set up routes
     app.use(raceMeetingRoutes)
