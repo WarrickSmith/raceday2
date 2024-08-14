@@ -1,7 +1,5 @@
 ## Description
 
-#### ${{ github.event.pull_request.title }}
-
 ## Related Issue
 
 ## Checklist

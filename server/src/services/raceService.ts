@@ -36,7 +36,6 @@ export const raceService = {
       },
     })
 
-    console.log("#today's races: ", races.length)
     return convertRacesToNZTime(races)
   },
 

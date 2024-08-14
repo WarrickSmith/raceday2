@@ -40,7 +40,7 @@ runnerRoutes
         set.status = 200
         console.log(
           '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched runners for race ID: ${params.raceId}`
+          ` ✅ Successfully fetched ${runners.length} runners for race ID: ${params.raceId}`
         )
         return runners
       } catch (error) {
