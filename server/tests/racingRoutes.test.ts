@@ -5,7 +5,10 @@ import { setupTestEnvironment, teardownTestEnvironment } from './setup'
 import { createTestData } from './createTestData'
 
 let meetingId = ''
-describe('Racing Routes', () => {
+let raceId = ''
+let runnerId = ''
+
+describe('Routes', () => {
   let app: Elysia
   let connection: mongoose.Connection
 
@@ -21,16 +24,14 @@ describe('Racing Routes', () => {
   })
 
   describe('Race Meeting Routes', () => {
-    // Test Cases
     it('should fetch all race meetings', async () => {
       const response = await app.handle(
         new Request('http://localhost/meetings')
       )
       const data = await response.json()
 
-      // save a meeting ID for subsequentsts
+      // save a meeting ID for subsequent tests
       meetingId = data[0]._id
-      console.log('meetingId: ', meetingId)
 
       expect(data).toEqual(
         expect.arrayContaining([
@@ -86,21 +87,77 @@ describe('Racing Routes', () => {
 
   describe('Race Routes', () => {
     it('should fetch all races for a meeting', async () => {
-      // Test implementation
+      const response = await app.handle(
+        new Request(`http://localhost/races/meeting/${meetingId}`)
+      )
+      const data = await response.json()
+
+      // save a race ID for subsequent tests
+      raceId = data[0]._id
+
+      expect(data[0].raceMeeting).toBe(meetingId)
+
+      expect(data).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+            name: expect.any(String),
+            number: expect.any(Number),
+            length: expect.any(String),
+            track: expect.any(String),
+          }),
+        ])
+      )
     })
 
     it('should fetch a race by ID', async () => {
-      // Test implementation
+      const response = await app.handle(
+        new Request(`http://localhost/races/${raceId}`)
+      )
+      const data = await response.json()
+      runnerId = data.runners[0]._id
+
+      expect(response.status).toBe(200)
+      expect(data).toHaveProperty('_id')
+      expect(data).toHaveProperty('class')
+      expect(data).toHaveProperty('norm_time')
+      expect(data).toHaveProperty('runners')
     })
   })
 
   describe('Runner Routes', () => {
     it('should fetch all runners for a race', async () => {
-      // Test implementation
+      const response = await app.handle(
+        new Request(`http://localhost/runners/race/${raceId}`)
+      )
+      const data = await response.json()
+      expect(data).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: expect.any(String),
+            race: expect.any(String),
+            number: expect.any(Number),
+            scratched: expect.any(Boolean),
+          }),
+        ])
+      )
     })
 
     it('should fetch a runner by ID', async () => {
-      // Test implementation
+      const response = await app.handle(
+        new Request(`http://localhost/runners/${runnerId}`)
+      )
+      const data = await response.json()
+      expect(data).toHaveProperty('_id')
+      expect(data).toHaveProperty('barrier')
+      expect(data).toHaveProperty('handicap')
+      expect(data).toHaveProperty('jockey')
+      expect(data).toMatchObject({
+        _id: expect.any(String),
+        name: expect.any(String),
+        number: expect.any(Number),
+        scratched: expect.any(Boolean),
+      })
     })
   })
 })
