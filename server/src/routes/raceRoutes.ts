@@ -8,7 +8,10 @@ raceRoutes
     try {
       const races = await raceService.getAllRaces()
       set.status = 200
-      console.log('\x1b[35m%s\x1b[0m', ' ✅ Successfully fetched all races')
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        ` ✅ Successfully fetched ${races.length} races`
+      )
       return races
     } catch (error) {
       set.status = 500
@@ -24,7 +27,7 @@ raceRoutes
         set.status = 200
         console.log(
           '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched races for meeting: ${params.meetingId}`
+          ` ✅ Successfully fetched ${races.length} races for meeting: ${params.meetingId}`
         )
         return races
       } catch (error) {
@@ -70,7 +73,10 @@ raceRoutes
     try {
       const races = await raceService.getTodaysRaces()
       set.status = 200
-      console.log('\x1b[35m%s\x1b[0m', " ✅ Successfully fetched today's races")
+      console.log(
+        '\x1b[35m%s\x1b[0m',
+        ` ✅ Successfully fetched today's ${races.length} races`
+      )
       return races
     } catch (error) {
       set.status = 500
