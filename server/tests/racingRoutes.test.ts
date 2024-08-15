@@ -26,7 +26,7 @@ describe('Routes', () => {
   describe('Race Meeting Routes', () => {
     it('should fetch all race meetings', async () => {
       const response = await app.handle(
-        new Request('http://localhost/meetings')
+        new Request('http://localhost/meetings/allmeetings')
       )
       const data = await response.json()
 
