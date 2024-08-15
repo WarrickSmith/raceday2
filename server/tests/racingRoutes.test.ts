@@ -30,9 +30,9 @@ describe('Routes', () => {
       )
       const data = await response.json()
 
-      // save a meeting ID for subsequent tests
       meetingId = data[0]._id
 
+      expect(response.status).toBe(200)
       expect(data).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -54,6 +54,8 @@ describe('Routes', () => {
         new Request(`http://localhost/meetings/${meetingId}`)
       )
       const data = await response.json()
+
+      expect(response.status).toBe(200)
       expect(data._id).toBe(meetingId)
       expect(data).toHaveProperty('_id')
       expect(data).toHaveProperty('betslip_type')
@@ -70,18 +72,28 @@ describe('Routes', () => {
       expect(data).toHaveProperty('track_dir')
       expect(data).toHaveProperty('type')
       expect(data).toHaveProperty('venue')
+    })
 
-      expect(data).toMatchObject({
-        _id: expect.any(String),
-        betslip_type: expect.any(String),
-        code: expect.any(String),
-        country: expect.any(String),
-        date: expect.any(String),
-        id: expect.any(String),
-        name: expect.any(String),
-        number: expect.any(Number),
-        nz: expect.any(Boolean),
-      })
+    it('should return 404 for non-existent race meeting', async () => {
+      const nonExistentId = '000000000000000000000000'
+      const response = await app.handle(
+        new Request(`http://localhost/meetings/${nonExistentId}`)
+      )
+
+      expect(response.status).toBe(404)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Race meeting not found' })
+    })
+
+    it('should return 400 for invalid race meeting ID format', async () => {
+      const invalidId = 'invalid-id'
+      const response = await app.handle(
+        new Request(`http://localhost/meetings/${invalidId}`)
+      )
+
+      expect(response.status).toBe(400)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Invalid race meeting ID format' })
     })
   })
 
@@ -92,11 +104,10 @@ describe('Routes', () => {
       )
       const data = await response.json()
 
-      // save a race ID for subsequent tests
       raceId = data[0]._id
 
+      expect(response.status).toBe(200)
       expect(data[0].raceMeeting).toBe(meetingId)
-
       expect(data).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -123,6 +134,28 @@ describe('Routes', () => {
       expect(data).toHaveProperty('norm_time')
       expect(data).toHaveProperty('runners')
     })
+
+    it('should return 404 for non-existent race', async () => {
+      const nonExistentId = '000000000000000000000000'
+      const response = await app.handle(
+        new Request(`http://localhost/races/${nonExistentId}`)
+      )
+
+      expect(response.status).toBe(404)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Race not found' })
+    })
+
+    it('should return 400 for invalid race ID format', async () => {
+      const invalidId = 'invalid-id'
+      const response = await app.handle(
+        new Request(`http://localhost/races/${invalidId}`)
+      )
+
+      expect(response.status).toBe(400)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Invalid race ID format' })
+    })
   })
 
   describe('Runner Routes', () => {
@@ -131,6 +164,8 @@ describe('Routes', () => {
         new Request(`http://localhost/runners/race/${raceId}`)
       )
       const data = await response.json()
+
+      expect(response.status).toBe(200)
       expect(data).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -148,6 +183,8 @@ describe('Routes', () => {
         new Request(`http://localhost/runners/${runnerId}`)
       )
       const data = await response.json()
+
+      expect(response.status).toBe(200)
       expect(data).toHaveProperty('_id')
       expect(data).toHaveProperty('barrier')
       expect(data).toHaveProperty('handicap')
@@ -158,6 +195,28 @@ describe('Routes', () => {
         number: expect.any(Number),
         scratched: expect.any(Boolean),
       })
+    })
+
+    it('should return 404 for non-existent runner', async () => {
+      const nonExistentId = '000000000000000000000000'
+      const response = await app.handle(
+        new Request(`http://localhost/runners/${nonExistentId}`)
+      )
+
+      expect(response.status).toBe(404)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Runner not found' })
+    })
+
+    it('should return 400 for invalid runner ID format', async () => {
+      const invalidId = 'invalid-id'
+      const response = await app.handle(
+        new Request(`http://localhost/runners/${invalidId}`)
+      )
+
+      expect(response.status).toBe(400)
+      const data = await response.json()
+      expect(data).toEqual({ message: 'Invalid runner ID format' })
     })
   })
 })
