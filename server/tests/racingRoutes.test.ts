@@ -95,9 +95,39 @@ describe('Routes', () => {
       const data = await response.json()
       expect(data).toEqual({ message: 'Invalid race meeting ID format' })
     })
+
+    it("should fetch all today's data", async () => {
+      const response = await app.handle(
+        new Request('http://localhost/meetings/alltoday')
+      )
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(data)).toBe(true)
+    })
+
+    it("should fetch today's race meetings", async () => {
+      const response = await app.handle(
+        new Request('http://localhost/meetings/today')
+      )
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(data)).toBe(true)
+    })
   })
 
   describe('Race Routes', () => {
+    it('should fetch all races', async () => {
+      const response = await app.handle(
+        new Request('http://localhost/races/allraces')
+      )
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(data)).toBe(true)
+    })
+
     it('should fetch all races for a meeting', async () => {
       const response = await app.handle(
         new Request(`http://localhost/races/meeting/${meetingId}`)
@@ -155,6 +185,16 @@ describe('Routes', () => {
       expect(response.status).toBe(400)
       const data = await response.json()
       expect(data).toEqual({ message: 'Invalid race ID format' })
+    })
+
+    it("should fetch today's races", async () => {
+      const response = await app.handle(
+        new Request('http://localhost/races/today')
+      )
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(data)).toBe(true)
     })
   })
 
