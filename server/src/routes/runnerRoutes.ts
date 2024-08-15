@@ -32,6 +32,32 @@ runnerRoutes
       detail: {
         summary: 'Fetch a single runner by the runner ID',
         tags: ['Runners'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Runner' },
+              },
+            },
+          },
+          '404': {
+            description: 'Runner not found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -59,6 +85,24 @@ runnerRoutes
       detail: {
         summary: 'Fetch all runners for a single race by the race ID',
         tags: ['Runners'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RunnerArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )

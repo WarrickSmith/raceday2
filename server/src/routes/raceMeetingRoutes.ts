@@ -86,12 +86,30 @@ raceMeetingRoutes
       detail: {
         summary: 'Fetch all todays race meetings, races and runners',
         tags: ['Meetings'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MeetingArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
 
   .get(
-    '/',
+    '/allmeetings',
     async ({ set }) => {
       try {
         const raceMeetings = await raceMeetingService.getAllRaceMeetings()
@@ -110,6 +128,24 @@ raceMeetingRoutes
       detail: {
         summary: 'Fetch all race meetings in the database',
         tags: ['Meetings'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MeetingArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -134,6 +170,24 @@ raceMeetingRoutes
       detail: {
         summary: 'Fetch all race meetings for today',
         tags: ['Meetings'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MeetingArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -164,6 +218,32 @@ raceMeetingRoutes
       detail: {
         summary: 'Fetch a single race meeting by ID',
         tags: ['Meetings'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Meeting' },
+              },
+            },
+          },
+          '404': {
+            description: 'Race meeting not found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )

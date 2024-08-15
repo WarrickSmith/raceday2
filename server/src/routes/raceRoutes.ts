@@ -5,7 +5,7 @@ const raceRoutes = new Elysia({ prefix: '/races' })
 
 raceRoutes
   .get(
-    '/',
+    '/allraces',
     async ({ set }) => {
       try {
         const races = await raceService.getAllRaces()
@@ -24,6 +24,24 @@ raceRoutes
       detail: {
         summary: 'Fetch all races in the database',
         tags: ['Races'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RaceArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -51,6 +69,24 @@ raceRoutes
       detail: {
         summary: 'Fetch all races for a meeting by the meeting ID',
         tags: ['Races'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RaceArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -82,6 +118,32 @@ raceRoutes
       detail: {
         summary: 'Fetch a single race by the race ID',
         tags: ['Races'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Race' },
+              },
+            },
+          },
+          '404': {
+            description: 'Race not found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )
@@ -106,6 +168,24 @@ raceRoutes
       detail: {
         summary: 'Fetch all races for today',
         tags: ['Races'],
+        responses: {
+          '200': {
+            description: 'Successful response',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RaceArray' },
+              },
+            },
+          },
+          '500': {
+            description: 'Internal server error',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
+              },
+            },
+          },
+        },
       },
     }
   )

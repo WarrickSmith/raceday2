@@ -6,6 +6,7 @@ import raceRoutes from './routes/raceRoutes'
 import runnerRoutes from './routes/runnerRoutes'
 import { errorHandler } from './utils/errorHandler'
 import { raceMeetingService } from './services/raceMeetingService'
+import { swaggerSchemas } from './models/swaggerSchemas'
 import cron from 'node-cron'
 
 const app = new Elysia()
@@ -77,22 +78,7 @@ connect()
             { name: 'Runners', description: 'Runner endpoints' },
           ],
           components: {
-            schemas: {
-              Error: {
-                type: 'object',
-                properties: {
-                  message: { type: 'string' },
-                },
-              },
-              Meeting: {
-                type: 'object',
-                // Define properties of a Meeting
-              },
-              MeetingArray: {
-                type: 'array',
-                items: { $ref: '#/components/schemas/Meeting' },
-              },
-            },
+            schemas: swaggerSchemas as any,
           },
         },
       })
