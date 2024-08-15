@@ -17,6 +17,7 @@ raceRoutes
         return races
       } catch (error) {
         set.status = 500
+        console.error('\x1b[31m%s\x1b[0m', 'Error fetching races:', error)
         return { message: 'Error fetching races' }
       }
     },
@@ -50,6 +51,10 @@ raceRoutes
     '/meeting/:meetingId',
     async ({ params, set }) => {
       try {
+        if (!params.meetingId.match(/^[0-9a-fA-F]{24}$/)) {
+          set.status = 400
+          return { message: 'Invalid meeting ID format' }
+        }
         const races = await raceService.getRacesByMeetingId(params.meetingId)
         set.status = 200
         console.log(
@@ -59,6 +64,11 @@ raceRoutes
         return races
       } catch (error) {
         set.status = 500
+        console.error(
+          '\x1b[31m%s\x1b[0m',
+          'Error fetching races for meeting:',
+          error
+        )
         return { message: 'Error fetching races for meeting' }
       }
     },
@@ -75,6 +85,14 @@ raceRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/RaceArray' },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid meeting ID format',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },
@@ -95,6 +113,10 @@ raceRoutes
     '/:id',
     async ({ params, set }) => {
       try {
+        if (!params.id.match(/^[0-9a-fA-F]{24}$/)) {
+          set.status = 400
+          return { message: 'Invalid race ID format' }
+        }
         const race = await raceService.getRaceById(params.id)
         if (!race) {
           set.status = 404
@@ -108,6 +130,7 @@ raceRoutes
         return race
       } catch (error) {
         set.status = 500
+        console.error('\x1b[31m%s\x1b[0m', 'Error fetching race:', error)
         return { message: 'Error fetching race' }
       }
     },
@@ -124,6 +147,14 @@ raceRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/Race' },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid race ID format',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },
@@ -161,6 +192,11 @@ raceRoutes
         return races
       } catch (error) {
         set.status = 500
+        console.error(
+          '\x1b[31m%s\x1b[0m',
+          "Error fetching today's races:",
+          error
+        )
         return { message: "Error fetching today's races" }
       }
     },

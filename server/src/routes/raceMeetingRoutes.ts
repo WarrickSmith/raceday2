@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { raceMeetingService } from '../services/raceMeetingService'
 import { IRunner } from '../models/Runner'
 import { IRace } from '../models/Race'
@@ -19,6 +19,11 @@ raceMeetingRoutes
         return result
       } catch (error) {
         set.status = 500
+        console.error(
+          '\x1b[31m%s\x1b[0m',
+          'Error fetching and storing race meetings:',
+          error
+        )
         return { message: 'Error fetching and storing race meetings' }
       }
     },
@@ -32,6 +37,14 @@ raceMeetingRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/MeetingArray' },
+              },
+            },
+          },
+          '400': {
+            description: 'Bad Request',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },
@@ -196,6 +209,10 @@ raceMeetingRoutes
     '/:id',
     async ({ params, set }) => {
       try {
+        if (!params.id.match(/^[0-9a-fA-F]{24}$/)) {
+          set.status = 400
+          return { message: 'Invalid race meeting ID format' }
+        }
         const raceMeeting = await raceMeetingService.getRaceMeetingById(
           params.id
         )
@@ -211,6 +228,11 @@ raceMeetingRoutes
         return raceMeeting.toJSON()
       } catch (error) {
         set.status = 500
+        console.error(
+          '\x1b[31m%s\x1b[0m',
+          'Error fetching race meeting:',
+          error
+        )
         return { message: 'Error fetching race meeting' }
       }
     },
@@ -224,6 +246,14 @@ raceMeetingRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/Meeting' },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid ID format',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },

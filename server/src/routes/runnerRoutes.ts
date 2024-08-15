@@ -1,4 +1,3 @@
-// src/routes/runnerRoutes.ts
 import { Elysia, t } from 'elysia'
 import { runnerService } from '../services/runnerService'
 
@@ -9,6 +8,10 @@ runnerRoutes
     '/:id',
     async ({ params, set }) => {
       try {
+        if (!params.id.match(/^[0-9a-fA-F]{24}$/)) {
+          set.status = 400
+          return { message: 'Invalid runner ID format' }
+        }
         const runner = await runnerService.getRunnerById(params.id)
         if (!runner) {
           set.status = 404
@@ -22,6 +25,7 @@ runnerRoutes
         return runner.toJSON()
       } catch (error) {
         set.status = 500
+        console.error('\x1b[31m%s\x1b[0m', 'Error fetching runner:', error)
         return { message: 'Error fetching runner' }
       }
     },
@@ -38,6 +42,14 @@ runnerRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/Runner' },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid runner ID format',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },
@@ -66,6 +78,10 @@ runnerRoutes
     '/race/:raceId',
     async ({ params, set }) => {
       try {
+        if (!params.raceId.match(/^[0-9a-fA-F]{24}$/)) {
+          set.status = 400
+          return { message: 'Invalid race ID format' }
+        }
         const runners = await runnerService.getRunnersByRaceId(params.raceId)
         set.status = 200
         console.log(
@@ -75,6 +91,11 @@ runnerRoutes
         return runners
       } catch (error) {
         set.status = 500
+        console.error(
+          '\x1b[31m%s\x1b[0m',
+          'Error fetching runners for race:',
+          error
+        )
         return { message: 'Error fetching runners for race' }
       }
     },
@@ -91,6 +112,14 @@ runnerRoutes
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/RunnerArray' },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid race ID format',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Error' },
               },
             },
           },
