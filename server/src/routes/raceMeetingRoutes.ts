@@ -1,7 +1,14 @@
+// raceMeetingRoutes.ts
 import { Elysia, t } from 'elysia'
 import { raceMeetingService } from '../services/raceMeetingService'
 import { IRunner } from '../models/Runner'
 import { IRace } from '../models/Race'
+import {
+  handleError,
+  handleSuccess,
+  validateId,
+  createDetailObject,
+} from '../utils/routeUtils'
 
 const raceMeetingRoutes = new Elysia({ prefix: '/meetings' })
 
@@ -11,53 +18,25 @@ raceMeetingRoutes
     async ({ set }) => {
       try {
         const result = await raceMeetingService.fetchAndStoreRaceMeetings()
-        set.status = 200
-        console.log(
-          '\x1b[35m%s\x1b[0m',
-          ' ✅ Successfully fetched and stored race meetings'
+        return handleSuccess(
+          set,
+          ' ✅ Successfully fetched and stored race meetings',
+          result
         )
-        return result
       } catch (error) {
-        set.status = 500
-        console.error(
-          '\x1b[31m%s\x1b[0m',
-          'Error fetching and storing race meetings:',
-          error
+        return handleError(
+          set,
+          error,
+          'Error fetching and storing race meetings:'
         )
-        return { message: 'Error fetching and storing race meetings' }
       }
     },
     {
-      detail: {
-        summary: 'Fetch and store todays race meetings',
-        tags: ['Meetings'],
-        responses: {
-          '200': {
-            description: 'Successful response',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/MeetingArray' },
-              },
-            },
-          },
-          '400': {
-            description: 'Bad Request',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-          '500': {
-            description: 'Internal server error',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-        },
-      },
+      detail: createDetailObject(
+        'Fetch and store todays race meetings',
+        ['Meetings'],
+        'MeetingArray'
+      ),
     }
   )
 
@@ -66,7 +45,6 @@ raceMeetingRoutes
     async ({ set }) => {
       try {
         const result = await raceMeetingService.getAllTodaysData()
-        set.status = 200
         const raceMeetingsCount = result.length
         const racesCount = result.reduce(
           (acc, meeting) => acc + meeting.races.length,
@@ -84,40 +62,25 @@ raceMeetingRoutes
             ),
           0
         )
-
-        console.log(
-          '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched all ${raceMeetingsCount} race meetings, ${racesCount} races and ${runnersCount} runners for today`
+        return handleSuccess(
+          set,
+          ` ✅ Successfully fetched all ${raceMeetingsCount} race meetings, ${racesCount} races and ${runnersCount} runners for today`,
+          result
         )
-        return result
       } catch (error) {
-        set.status = 500
-        return { message: 'Error fetching and storing race meetings' }
+        return handleError(
+          set,
+          error,
+          'Error fetching and storing race meetings'
+        )
       }
     },
     {
-      detail: {
-        summary: 'Fetch all todays race meetings, races and runners',
-        tags: ['Meetings'],
-        responses: {
-          '200': {
-            description: 'Successful response',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/MeetingArray' },
-              },
-            },
-          },
-          '500': {
-            description: 'Internal server error',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-        },
-      },
+      detail: createDetailObject(
+        'Fetch all todays race meetings, races and runners',
+        ['Meetings'],
+        'MeetingArray'
+      ),
     }
   )
 
@@ -126,40 +89,21 @@ raceMeetingRoutes
     async ({ set }) => {
       try {
         const raceMeetings = await raceMeetingService.getAllRaceMeetings()
-        set.status = 200
-        console.log(
-          '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched all ${raceMeetings.length} race meetings`
+        return handleSuccess(
+          set,
+          ` ✅ Successfully fetched all ${raceMeetings.length} race meetings`,
+          raceMeetings
         )
-        return raceMeetings
       } catch (error) {
-        set.status = 500
-        return { message: 'Error fetching race meetings' }
+        return handleError(set, error, 'Error fetching race meetings')
       }
     },
     {
-      detail: {
-        summary: 'Fetch all race meetings in the database',
-        tags: ['Meetings'],
-        responses: {
-          '200': {
-            description: 'Successful response',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/MeetingArray' },
-              },
-            },
-          },
-          '500': {
-            description: 'Internal server error',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-        },
-      },
+      detail: createDetailObject(
+        'Fetch all race meetings in the database',
+        ['Meetings'],
+        'MeetingArray'
+      ),
     }
   )
 
@@ -168,40 +112,21 @@ raceMeetingRoutes
     async ({ set }) => {
       try {
         const raceMeetings = await raceMeetingService.getTodaysRaceMeetings()
-        set.status = 200
-        console.log(
-          '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched ${raceMeetings.length} race meetings for today`
+        return handleSuccess(
+          set,
+          ` ✅ Successfully fetched ${raceMeetings.length} race meetings for today`,
+          raceMeetings
         )
-        return raceMeetings
       } catch (error) {
-        set.status = 500
-        return { message: "Error fetching today's race meetings" }
+        return handleError(set, error, "Error fetching today's race meetings")
       }
     },
     {
-      detail: {
-        summary: 'Fetch all race meetings for today',
-        tags: ['Meetings'],
-        responses: {
-          '200': {
-            description: 'Successful response',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/MeetingArray' },
-              },
-            },
-          },
-          '500': {
-            description: 'Internal server error',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-        },
-      },
+      detail: createDetailObject(
+        'Fetch all race meetings for today',
+        ['Meetings'],
+        'MeetingArray'
+      ),
     }
   )
 
@@ -209,10 +134,7 @@ raceMeetingRoutes
     '/:id',
     async ({ params, set }) => {
       try {
-        if (!params.id.match(/^[0-9a-fA-F]{24}$/)) {
-          set.status = 400
-          return { message: 'Invalid race meeting ID format' }
-        }
+        validateId(params.id)
         const raceMeeting = await raceMeetingService.getRaceMeetingById(
           params.id
         )
@@ -220,61 +142,28 @@ raceMeetingRoutes
           set.status = 404
           return { message: 'Race meeting not found' }
         }
-        set.status = 200
-        console.log(
-          '\x1b[35m%s\x1b[0m',
-          ` ✅ Successfully fetched race meeting with id ${params.id}`
+        return handleSuccess(
+          set,
+          ` ✅ Successfully fetched race meeting with id ${params.id}`,
+          raceMeeting.toJSON()
         )
-        return raceMeeting.toJSON()
       } catch (error) {
-        set.status = 500
-        console.error(
-          '\x1b[31m%s\x1b[0m',
-          'Error fetching race meeting:',
-          error
-        )
-        return { message: 'Error fetching race meeting' }
+        if (error instanceof Error && error.message === 'Invalid ID format') {
+          set.status = 400
+          return { message: 'Invalid race meeting ID format' }
+        }
+        return handleError(set, error, 'Error fetching race meeting:')
       }
     },
     {
-      detail: {
-        summary: 'Fetch a single race meeting by ID',
-        tags: ['Meetings'],
-        responses: {
-          '200': {
-            description: 'Successful response',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Meeting' },
-              },
-            },
-          },
-          '400': {
-            description: 'Invalid ID format',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-          '404': {
-            description: 'Race meeting not found',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-          '500': {
-            description: 'Internal server error',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
-        },
-      },
+      params: t.Object({
+        id: t.String(),
+      }),
+      detail: createDetailObject(
+        'Fetch a single race meeting by ID',
+        ['Meetings'],
+        'Meeting'
+      ),
     }
   )
 
