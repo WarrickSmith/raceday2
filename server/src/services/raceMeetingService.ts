@@ -123,17 +123,4 @@ export const raceMeetingService = {
   getRaceMeetingById: async (id: string) => {
     return await RaceMeeting.findById(id)
   },
-
-  createRaceMeeting: async (data: any) => {
-    const raceMeeting = new RaceMeeting(data)
-    return await raceMeeting.save()
-  },
-
-  updateRaceMeeting: async (id: string, data: any) => {
-    return await RaceMeeting.findByIdAndUpdate(id, data, { new: true })
-  },
-
-  deleteRaceMeeting: async (id: string) => {
-    return await RaceMeeting.findByIdAndDelete(id)
-  },
 }

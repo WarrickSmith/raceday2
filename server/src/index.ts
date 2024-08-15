@@ -1,10 +1,12 @@
 import { Elysia } from 'elysia'
+import { swagger } from '@elysiajs/swagger'
 import { connect } from './config/database'
 import raceMeetingRoutes from './routes/raceMeetingRoutes'
 import raceRoutes from './routes/raceRoutes'
 import runnerRoutes from './routes/runnerRoutes'
 import { errorHandler } from './utils/errorHandler'
 import { raceMeetingService } from './services/raceMeetingService'
+import { swaggerSchemas } from './models/swaggerSchemas'
 import cron from 'node-cron'
 
 const app = new Elysia()
@@ -57,6 +59,30 @@ connect()
           )
         )
     })
+
+    //Set up Open API Documentation on /swagger... with scalar UI
+    app.use(
+      swagger({
+        path: '/docs',
+        scalarConfig: {
+          theme: 'solarized',
+        },
+        documentation: {
+          info: {
+            title: 'Race Day API Documentation',
+            version: '1.0.0',
+          },
+          tags: [
+            { name: 'Meetings', description: 'Meeting endpoints' },
+            { name: 'Races', description: 'Race endpoints' },
+            { name: 'Runners', description: 'Runner endpoints' },
+          ],
+          components: {
+            schemas: swaggerSchemas as any,
+          },
+        },
+      })
+    )
 
     // Set up routes
     app.use(raceMeetingRoutes)

@@ -1,0 +1,87 @@
+export const swaggerSchemas = {
+  Error: {
+    type: 'object',
+    properties: {
+      message: { type: 'string' },
+    },
+  },
+  Meeting: {
+    type: 'object',
+    properties: {
+      _id: { type: 'string' },
+      date: { type: 'string', format: 'date-time' },
+      betslip_type: { type: 'string' },
+      code: { type: 'string' },
+      country: { type: 'string' },
+      id: { type: 'string' },
+      name: { type: 'string' },
+      number: { type: 'number' },
+      nz: { type: 'boolean' },
+      penetrometer: { type: 'string', nullable: true },
+      status: { type: 'string' },
+      track_dir: { type: 'string' },
+      type: { type: 'string' },
+      venue: { type: 'string' },
+      races: {
+        type: 'array',
+        items: { type: 'string' },
+      },
+    },
+  },
+  Race: {
+    type: 'object',
+    properties: {
+      _id: { type: 'string' },
+      class: { type: 'string' },
+      id: { type: 'string' },
+      length: { type: 'string' },
+      name: { type: 'string' },
+      norm_time: { type: 'string', format: 'date-time' },
+      number: { type: 'number' },
+      options: {
+        type: 'array',
+        items: { type: 'object' },
+      },
+      overseas_number: { type: 'number', nullable: true },
+      stake: { type: 'string' },
+      status: { type: 'string' },
+      track: { type: 'string' },
+      trackside_channel: { type: 'string' },
+      venue: { type: 'string', nullable: true },
+      weather: { type: 'string' },
+      raceMeeting: { type: 'string' },
+      runners: {
+        type: 'array',
+        items: { type: 'string' },
+      },
+    },
+  },
+  Runner: {
+    type: 'object',
+    properties: {
+      _id: { type: 'string' },
+      allowance: { type: 'string', nullable: true },
+      barrier: { type: 'string' },
+      handicap: { type: 'number', nullable: true },
+      jockey: { type: 'string' },
+      name: { type: 'string' },
+      number: { type: 'number' },
+      scratched: { type: 'boolean' },
+      weight: { type: 'number' },
+      race: { type: 'string' },
+      raceMeeting: { type: 'string' },
+    },
+  },
+  MeetingArray: {
+    type: 'array',
+    items: { $ref: '#/components/schemas/Meeting' },
+  },
+  RaceArray: {
+    type: 'array',
+    items: { $ref: '#/components/schemas/Race' },
+  },
+  RunnerArray: {
+    type: 'array',
+    items: { $ref: '#/components/schemas/Runner' },
+  },
+}
