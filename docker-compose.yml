@@ -1,0 +1,12 @@
+services:
+  server:
+    build: ./server
+    restart: always
+    ports:
+      - '5020:5020'
+    environment:
+      - PORT=5020
+      - NZ_TAB_URL=https://json.tab.co.nz/schedule/
+      - MONGODB_URI=mongodb://host.docker.internal:27017/raceday2
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
