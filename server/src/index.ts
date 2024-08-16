@@ -1,4 +1,5 @@
 import { Elysia } from 'elysia'
+import { cors } from '@elysiajs/cors'
 import { swagger } from '@elysiajs/swagger'
 import { connect } from './config/database'
 import raceMeetingRoutes from './routes/raceMeetingRoutes'
@@ -59,6 +60,9 @@ connect()
           )
         )
     })
+
+    // Add cross origin domain support
+    app.use(cors())
 
     //Set up Open API Documentation on /swagger... with scalar UI
     app.use(

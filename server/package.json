@@ -4,9 +4,11 @@
   "scripts": {
     "test": "bun test ./tests/**/*.test.ts",
     "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts"
+    "build": "bun build ./src/index.ts --outdir ./dist --target bun",
+    "start": "bun run dist/index.js"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.1.0",
     "@elysiajs/swagger": "^1.1.1",
     "axios": "^1.7.3",
     "elysia": "latest",
