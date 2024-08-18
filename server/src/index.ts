@@ -39,27 +39,37 @@ connect()
       )
 
     // Schedule daily fetch at 8:00 AM
-    cron.schedule('0 8 * * *', () => {
-      raceMeetingService
-        .fetchAndStoreRaceMeetings()
-        .then(() =>
-          console.log(
-            '\x1b[33m',
-            `${
-              new Date()
-                .toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })
-                .split(',')[0]
-            } Daily race meetings fetch completed`
+    // Schedule daily fetch at 8:00 AM New Zealand time
+    cron.schedule(
+      '0 8 * * *',
+      () => {
+        raceMeetingService
+          .fetchAndStoreRaceMeetings()
+          .then(() => {
+            const serverTime = new Date().toLocaleString()
+            const nzTime = new Date().toLocaleString('en-NZ', {
+              timeZone: 'Pacific/Auckland',
+            })
+            console.log(
+              '\x1b[33m',
+              `Daily race meetings fetch completed at:
+        Server time: ${serverTime}
+        New Zealand time: ${nzTime}`
+            )
+          })
+          .catch((error) =>
+            console.error(
+              '\x1b[31m',
+              'Error in daily race meetings fetch:',
+              error
+            )
           )
-        )
-        .catch((error) =>
-          console.error(
-            '\x1b[31m',
-            'Error in daily race meetings fetch:',
-            error
-          )
-        )
-    })
+      },
+      {
+        scheduled: true,
+        timezone: 'Pacific/Auckland',
+      }
+    )
 
     // Add cross origin domain support
     app.use(cors())
