@@ -96,6 +96,16 @@ connect()
           components: {
             schemas: swaggerSchemas as any,
           },
+          servers: [
+            {
+              url: 'https://warricksmith.com/raceday2api',
+              description: 'Production server',
+            },
+            {
+              url: 'http://localhost:5020',
+              description: 'Development server',
+            },
+          ],
         },
       })
     )
