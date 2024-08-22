@@ -20,16 +20,18 @@ connect()
     // Invoke fetchAndStoreRaceMeetings immediately
     raceMeetingService
       .fetchAndStoreRaceMeetings()
-      .then(() =>
+      .then(() => {
+        const ServerTime = new Date().toLocaleString()
+        const nzTime = new Date().toLocaleString('en-NZ', {
+          timeZone: 'Pacific/Auckland',
+        })
         console.log(
           '\x1b[33m',
-          `${
-            new Date()
-              .toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })
-              .split(',')[0]
-          } Initial race meetings fetch completed`
+          `Initial race meetings fetch completed at:
+        Server Time time: ${ServerTime}
+        New Zealand time: ${nzTime}`
         )
-      )
+      })
       .catch((error) =>
         console.error(
           '\x1b[31m',
@@ -46,14 +48,14 @@ connect()
         raceMeetingService
           .fetchAndStoreRaceMeetings()
           .then(() => {
-            const serverTime = new Date().toLocaleString()
+            const ServerTime = new Date().toLocaleString()
             const nzTime = new Date().toLocaleString('en-NZ', {
               timeZone: 'Pacific/Auckland',
             })
             console.log(
               '\x1b[33m',
               `Daily race meetings fetch completed at:
-        Server time: ${serverTime}
+        Server Time time: ${ServerTime}
         New Zealand time: ${nzTime}`
             )
           })
