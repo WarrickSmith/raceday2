@@ -11,7 +11,7 @@ ENV  NEXT_PUBLIC_API_URL=http://localhost:5020
 COPY package.json bun.lockb* ./
 
 # Install dependencies
-RUN bun install --production
+RUN bun install 
 
 # Copy the rest of your app's source code
 COPY . .
@@ -23,4 +23,4 @@ RUN bun run build
 EXPOSE 3003
 
 # Run the app
-CMD ["bun", "start"]
+CMD ["bun", "run", "start"]
