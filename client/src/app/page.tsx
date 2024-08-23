@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -6,7 +6,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
-          src="/next.svg"
+          src="/raceday2/next.svg"
           alt="Next.js logo"
           width={180}
           height={38}
@@ -14,7 +14,7 @@ export default function Home() {
         />
         <ol className="font-mono list-inside list-decimal text-sm text-center sm:text-left">
           <li className="mb-2">
-            Get started by editing{" "}
+            Get started by editing{' '}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
               src/app/page.tsx
             </code>
@@ -31,7 +31,7 @@ export default function Home() {
           >
             <Image
               className="dark:invert"
-              src="/vercel.svg"
+              src="/raceday2/vercel.svg"
               alt="Vercel logomark"
               width={20}
               height={20}
@@ -57,7 +57,7 @@ export default function Home() {
         >
           <Image
             aria-hidden
-            src="/file-text.svg"
+            src="/raceday2/file-text.svg"
             alt="File icon"
             width={16}
             height={16}
@@ -72,7 +72,7 @@ export default function Home() {
         >
           <Image
             aria-hidden
-            src="/window.svg"
+            src="/raceday2/window.svg"
             alt="Window icon"
             width={16}
             height={16}
@@ -87,7 +87,7 @@ export default function Home() {
         >
           <Image
             aria-hidden
-            src="/globe.svg"
+            src="/raceday2/globe.svg"
             alt="Globe icon"
             width={16}
             height={16}
@@ -96,5 +96,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  );
+  )
 }
