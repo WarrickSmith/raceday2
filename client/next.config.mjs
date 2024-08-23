@@ -6,6 +6,7 @@ const nextConfig = {
     after: true,
   },
   basePath: '/raceday2',
+  crossOrigin: 'anonymous',
 }
 
 export default nextConfig
