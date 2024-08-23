@@ -5,6 +5,7 @@ const nextConfig = {
     ppr: 'incremental',
     after: true,
   },
+  basePath: '/raceday2',
 }
 
 export default nextConfig
