@@ -10,3 +10,11 @@ services:
       - MONGODB_URI=mongodb://host.docker.internal:27017/raceday2
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+
+  client:
+    build: ./client
+    restart: always
+    ports:
+      - '3020:3020'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5020
