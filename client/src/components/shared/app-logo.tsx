@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function AppLogo() {
+const AppLogo = () => {
   return (
     <Link href="/" className="flex-start">
       <div className={`flex flex-row items-end space-x-2`}>
@@ -17,3 +17,5 @@ export default function AppLogo() {
     </Link>
   )
 }
+
+export default AppLogo
