@@ -4,7 +4,7 @@ import Image from 'next/image'
 const AppLogo = () => {
   return (
     <Link href="/" className="flex-start">
-      <div className={`flex flex-row items-end space-x-2`}>
+      <div className={`flex flex-row items-center space-x-2 mb-2 mt-2`}>
         <Image
           src="/raceday2/logo.svg"
           width={32}
