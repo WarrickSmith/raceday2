@@ -8,7 +8,7 @@ const RaceMeetingsWrapper = async () => {
 
   return (
     <Card className="h-[400px] flex flex-col">
-      <CardHeader className="flex flex-row items-center space-y-0 pb-6 gap-2">
+      <CardHeader className="flex flex-row items-center space-y-0 pb- gap-2">
         <CalendarFold />
         <CardTitle className="text-lg font-medium">Today's Meetings</CardTitle>
       </CardHeader>

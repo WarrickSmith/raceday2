@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { CardSkeleton } from '../skeletons'
 import RaceMeetingsWrapper from './race-meetings-wrapper'
+import RacesWrapper from './races-wrapper'
 
 const Dashboard = () => {
   return (
@@ -10,7 +11,9 @@ const Dashboard = () => {
         <Suspense fallback={<CardSkeleton />}>
           <RaceMeetingsWrapper />
         </Suspense>
-        <CardSkeleton />
+        <Suspense fallback={<CardSkeleton />}>
+          <RacesWrapper />
+        </Suspense>
         <CardSkeleton />
       </div>
     </main>
