@@ -15,11 +15,12 @@ client/node_modules
 
 # production
 /build
-/dist
+/server/dist*
 
 # misc
 .DS_Store
 *.pem
+z-client*
 
 # debug
 npm-debug.log*
