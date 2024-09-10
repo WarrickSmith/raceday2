@@ -23,4 +23,4 @@ RUN bun run build
 EXPOSE 5020
 
 # Run the app
-CMD ["bun", "run", "dist/index.js"]
+CMD ["bun", "run", "start"]

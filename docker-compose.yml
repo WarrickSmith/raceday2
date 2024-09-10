@@ -17,4 +17,7 @@ services:
     ports:
       - '3020:3020'
     environment:
+      - API_URL=http://localhost:5020
       - NEXT_PUBLIC_API_URL=http://localhost:5020
+    depends_on:
+      - server
