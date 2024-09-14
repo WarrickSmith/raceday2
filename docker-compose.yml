@@ -8,8 +8,9 @@ services:
       - PORT=5020
       - NZ_TAB_URL=https://json.tab.co.nz/schedule/
       - MONGODB_URI=mongodb://host.docker.internal:27017/raceday2
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
+
+    networks:
+      - app-network
 
   client:
     build: ./client
@@ -17,7 +18,15 @@ services:
     ports:
       - '3020:3020'
     environment:
-      - API_URL=http://localhost:5020
+      - API_URL=http://server:5020
       - NEXT_PUBLIC_API_URL=http://localhost:5020
+
+    networks:
+      - app-network
+
     depends_on:
       - server
+
+networks:
+  app-network:
+    driver: bridge
