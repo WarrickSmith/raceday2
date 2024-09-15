@@ -7,7 +7,7 @@ services:
     environment:
       - PORT=5020
       - NZ_TAB_URL=https://json.tab.co.nz/schedule/
-      - MONGODB_URI=mongodb://host.docker.internal:27017/raceday2
+      - MONGODB_URI=mongodb://localhost:27017/raceday2
 
     networks:
       - app-network
