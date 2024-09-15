@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Set environment variables
 ENV NZ_TAB_URL=https://json.tab.co.nz/schedule/
-ENV MONGODB_URI=mongodb://127.0.0.1:27017/raceday2
+ENV MONGODB_URI=mongodb://10.1.1.95:27017/raceday2
 
 # Copy package.json and bun.lockb (if you have one)
 COPY package.json bun.lockb* ./
