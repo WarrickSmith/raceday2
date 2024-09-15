@@ -5,7 +5,8 @@ FROM oven/bun:latest
 WORKDIR /app
 
 # Set environment variables
-ENV MONGODB_URI=mongodb://host.docker.internal:27017/raceday2
+ENV NZ_TAB_URL=https://json.tab.co.nz/schedule/
+ENV MONGODB_URI=mongodb://localhost:27017/raceday2
 
 # Copy package.json and bun.lockb (if you have one)
 COPY package.json bun.lockb* ./
