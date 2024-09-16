@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { CardSkeleton } from '../shared/skeletons'
 import RaceMeetingsWrapper from './race-meetings-wrapper'
 import RacesWrapper from './races-wrapper'
+import RunnersWrapper from './runners-wrapper'
 
 export const experimental_ppr = true
 
@@ -16,7 +17,9 @@ const Dashboard = () => {
         <Suspense fallback={<CardSkeleton />}>
           <RacesWrapper />
         </Suspense>
-        <CardSkeleton />
+        <Suspense fallback={<CardSkeleton />}>
+          <RunnersWrapper />
+        </Suspense>
       </div>
     </main>
   )

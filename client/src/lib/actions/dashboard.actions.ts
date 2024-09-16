@@ -41,3 +41,23 @@ export const getRaces = async (meetingId: string) => {
     return []
   }
 }
+
+export const getRunners = async (raceId: string) => {
+  try {
+    if (!API_URL) {
+      console.error('NEXT_PUBLIC_API_URL is not defined in the environment')
+      return []
+    }
+
+    const res = await fetch(`${API_URL}/runners/race/${raceId}`)
+    if (!res.ok) {
+      console.error(`HTTP error! status: ${res.status}`)
+      return []
+    }
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.error('Error fetching races:', error)
+    return []
+  }
+}
