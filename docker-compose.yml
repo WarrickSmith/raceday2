@@ -7,8 +7,7 @@ services:
     environment:
       - PORT=5020
       - NZ_TAB_URL=https://json.tab.co.nz/schedule/
-      - MONGODB_URI=mongodb://localhost:27017/raceday2
-
+      - MONGODB_URI=mongodb://mongodb:27017/raceday2
     networks:
       - app-network
 
@@ -20,13 +19,11 @@ services:
     environment:
       - API_URL=http://server:5020
       - NEXT_PUBLIC_API_URL=http://localhost:5020
-
+    depends_on:
+      - server
     networks:
       - app-network
 
-    depends_on:
-      - server
-
 networks:
   app-network:
-    driver: bridge
+    external: true
