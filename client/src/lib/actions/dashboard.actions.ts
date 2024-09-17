@@ -2,8 +2,6 @@ const API_URL = process.env.API_URL
 
 export const meetingsToday = async () => {
   try {
-    console.log('API URL : ', API_URL)
-
     if (!API_URL) {
       console.error('NEXT_PUBLIC_API_URL is not defined in the environment')
       return []
