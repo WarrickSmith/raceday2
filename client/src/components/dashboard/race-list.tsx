@@ -11,6 +11,7 @@ interface Race {
 }
 
 const RaceList = async () => {
+  console.log('RACE LIST')
   noStore()
   const races = (await getRaces('66c58ed40e48625383e38638')) || []
   if (!races || races.length === 0) {
@@ -19,7 +20,7 @@ const RaceList = async () => {
 
   return (
     <ScrollArea className="h-full w-full rounded-md pr-4">
-      {races.map((race: Race) => (
+      {/* {races.map((race: Race) => (
         <Button
           key={race.id}
           variant={race.id === races[1]?.id ? 'default' : 'ghost'}
@@ -28,7 +29,7 @@ const RaceList = async () => {
           <span className="text-left truncate">{race.name}</span>
           <span className="text-right">{formatNZTime(race.norm_time)}</span>
         </Button>
-      ))}
+      ))} */}
     </ScrollArea>
   )
 }
