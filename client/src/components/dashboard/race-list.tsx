@@ -20,7 +20,7 @@ const RaceList = async () => {
 
   return (
     <ScrollArea className="h-full w-full rounded-md pr-4">
-      {/* {races.map((race: Race) => (
+      {races.map((race: Race) => (
         <Button
           key={race.id}
           variant={race.id === races[1]?.id ? 'default' : 'ghost'}
@@ -29,7 +29,7 @@ const RaceList = async () => {
           <span className="text-left truncate">{race.name}</span>
           <span className="text-right">{formatNZTime(race.norm_time)}</span>
         </Button>
-      ))} */}
+      ))}
     </ScrollArea>
   )
 }

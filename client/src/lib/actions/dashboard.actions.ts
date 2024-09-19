@@ -1,6 +1,8 @@
 const API_URL = process.env.API_URL
+const CLIENT_API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const meetingsToday = async () => {
+  console.log('MEETINGS-TODAY-CALLED - URL : ', API_URL)
   try {
     if (!API_URL) {
       console.error('API_URL is not defined in the environment')
@@ -21,13 +23,14 @@ export const meetingsToday = async () => {
 }
 
 export const getMeetingById = async (id: string) => {
+  console.log('GET-MEETING-BY-ID-CALLED - URL : ', API_URL || CLIENT_API_URL)
   try {
-    if (!API_URL) {
+    if (!API_URL && !CLIENT_API_URL) {
       console.error('API_URL is not defined in the environment')
       return null
     }
 
-    const res = await fetch(`${API_URL}/meetings/${id}`)
+    const res = await fetch(`${API_URL || CLIENT_API_URL}/meetings/${id}`)
     if (!res.ok) {
       console.error(`HTTP error! status: ${res.status}`)
       return null
