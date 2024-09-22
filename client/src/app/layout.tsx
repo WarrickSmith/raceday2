@@ -1,3 +1,4 @@
+import { Providers } from './providers'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from 'next-themes'
@@ -27,19 +28,21 @@ const RootLayout = ({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col h-screen md:flex-row md:overflow-hidden">
-            <div className="w-full flex-none md:w-52 bg-secondary">
-              <SideNav />
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col h-screen md:flex-row md:overflow-hidden">
+              <div className="w-full flex-none md:w-52 bg-secondary">
+                <SideNav />
+              </div>
+              <div className="grow p-6 md:overflow-y-auto ">{children}</div>
             </div>
-            <div className="grow p-6 md:overflow-y-auto ">{children}</div>
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

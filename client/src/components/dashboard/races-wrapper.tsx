@@ -1,6 +1,6 @@
 import { BellElectric } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import RaceList from './races'
+import RaceList from './race-list'
 
 const RacesWrapper = () => {
   return (

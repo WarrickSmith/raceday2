@@ -15,6 +15,20 @@ export const CardSkeleton = () => {
   )
 }
 
+export const CardSkeletonSmall = () => {
+  return (
+    <Card className="pr-4 mb-4">
+      <CardHeader className="flex flex-row  space-y-0 space-x-3">
+        <Skeleton className="w-6 h-6 rounded-full" />
+        <Skeleton className="w-20 h-6" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-36 w-full" />
+      </CardContent>
+    </Card>
+  )
+}
+
 export const CardsSkeleton = () => {
   return (
     <>
