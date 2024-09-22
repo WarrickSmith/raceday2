@@ -6,7 +6,6 @@ import Meeting from './meeting'
 import RacesWrapper from './races-wrapper'
 
 const MeetingWrapper = () => {
-  console.log('MEETING WRAPPER')
   return (
     <Card className="h-[680px] flex flex-col">
       <CardHeader className="flex flex-row items-center space-y-0 pb- gap-2">

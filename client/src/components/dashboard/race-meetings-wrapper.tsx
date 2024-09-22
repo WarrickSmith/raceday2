@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Meetings from './meetings'
 
 const RaceMeetingsWrapper = () => {
-  console.log('RACE MEETINGS WRAPPER')
   return (
     <Card className="h-[400px] flex flex-col">
       <CardHeader className="flex flex-row items-center space-y-0 pb- gap-2">

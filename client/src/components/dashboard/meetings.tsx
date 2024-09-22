@@ -10,7 +10,6 @@ interface Meeting {
 }
 
 const MeetingsList = async () => {
-  console.log('MEETINGS LIST')
   noStore()
   const meetings = (await meetingsToday()) || []
   if (!meetings || meetings.length === 0) {

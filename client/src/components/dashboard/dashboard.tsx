@@ -4,7 +4,6 @@ import MeetingWrapper from './meeting-wrapper'
 export const experimental_ppr = true
 
 const Dashboard = () => {
-  console.log('DASHBOARD')
   return (
     <main>
       <h1 className={`mb-4 text-xl md:text-2xl`}>Racing Dashboard</h1>
