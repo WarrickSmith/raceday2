@@ -81,3 +81,22 @@ export const getRunners = async (raceId: string) => {
     return []
   }
 }
+
+export const getRaceById = async (id: string) => {
+  try {
+    if (!API_URL && !CLIENT_API_URL) {
+      console.error('API_URL is not defined in the environment')
+      return null
+    }
+    const res = await fetch(`${API_URL || CLIENT_API_URL}/races/${id}`)
+    if (!res.ok) {
+      console.error(`HTTP error! status: ${res.status}`)
+      return null
+    }
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.error('Error fetching race:', error)
+    return null
+  }
+}

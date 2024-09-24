@@ -24,7 +24,6 @@ const MeetingsList = async () => {
           id={meeting._id}
           name={meeting.name}
           country={meeting.country}
-          isSelected={index === 1}
         />
       ))}
     </ScrollArea>

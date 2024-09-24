@@ -7,9 +7,10 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { getRaces } from '@/lib/actions/dashboard.actions'
 import { formatNZTime } from '@/lib/utils'
 import { useMeetingContext } from '@/contexts/meeting-context'
+import Link from 'next/link'
 
 interface Race {
-  id: string
+  _id: string
   name: string
   norm_time: string
 }
@@ -36,15 +37,16 @@ const RaceList = () => {
   return (
     <ScrollArea className="h-full w-full rounded-md pr-4">
       {races.map((race: Race) => (
-        <Button
-          key={race.id}
-          // variant={race.id === races[1]?.id ? 'default' : 'ghost'}
-          variant={'ghost'}
-          className="w-full grid grid-cols-[1fr,auto] gap-2 items-center mb-2"
-        >
-          <span className="text-left truncate">{race.name}</span>
-          <span className="text-right">{formatNZTime(race.norm_time)}</span>
-        </Button>
+        <Link href={`/race/${race._id}`} key={race._id}>
+          <Button
+            key={race._id}
+            variant={'ghost'}
+            className="w-full grid grid-cols-[1fr,auto] gap-2 items-center mb-2"
+          >
+            <span className="text-left truncate">{race.name}</span>
+            <span className="text-right">{formatNZTime(race.norm_time)}</span>
+          </Button>
+        </Link>
       ))}
     </ScrollArea>
   )
