@@ -18,7 +18,6 @@ const links = [
     href: '/meetings',
     icon: CalendarFold,
   },
-  { name: 'Races', href: '/races', icon: BellElectric },
   { name: 'Runners', href: '/runners', icon: Rabbit },
 ]
 

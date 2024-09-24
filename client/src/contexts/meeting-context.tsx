@@ -1,6 +1,13 @@
 'use client'
 
-import { createContext, useState, useContext, ReactNode } from 'react'
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from 'react'
+import { meetingsToday } from '@/lib/actions/dashboard.actions'
 
 const MeetingContext = createContext<{
   meetingId: string
@@ -16,6 +23,17 @@ export const MeetingContextProvider = ({
   children: ReactNode
 }) => {
   const [meetingId, setMeetingId] = useState('')
+
+  useEffect(() => {
+    const initializeMeetingId = async () => {
+      const meetings = await meetingsToday()
+      if (meetings && meetings.length > 0) {
+        setMeetingId(meetings[0]._id)
+      }
+    }
+
+    initializeMeetingId()
+  }, [])
 
   return (
     <MeetingContext.Provider value={{ meetingId, setMeetingId }}>

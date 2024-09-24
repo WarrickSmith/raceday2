@@ -7,14 +7,12 @@ interface MeetingButtonProps {
   id: string
   name: string
   country: string
-  isSelected: boolean
 }
 
 export default function MeetingButton({
   id,
   name,
   country,
-  isSelected,
 }: MeetingButtonProps) {
   const { meetingId, setMeetingId } = useMeetingContext()
 
