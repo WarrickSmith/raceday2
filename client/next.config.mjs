@@ -1,0 +1,16 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // experimental: {
+  // reactCompiler: true,
+  // ppr: 'incremental',
+  // ppr: true,
+  // dynamicIO: true,
+  // },
+  reactStrictMode: true,
+  ppr: 'incremental',
+  basePath: '/raceday2',
+  crossOrigin: 'anonymous',
+  output: 'standalone',
+}
+
+export default nextConfig
