@@ -2,7 +2,8 @@ import { getRaceById } from '@/lib/actions/dashboard.actions'
 import RaceDetails from '@/components/race/race-details'
 import RunnersList from '@/components/race/runners-list'
 
-const RacePage = async ({ params }: { params: { raceid: string } }) => {
+const RacePage = async (props: { params: Promise<{ raceid: string }> }) => {
+  const params = await props.params;
   const race = await getRaceById(params.raceid)
 
   if (!race) {
