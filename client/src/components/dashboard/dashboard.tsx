@@ -1,8 +1,6 @@
 import RaceMeetingsWrapper from './race-meetings-wrapper'
 import MeetingWrapper from './meeting-wrapper'
 
-export const experimental_ppr = true
-
 const Dashboard = () => {
   return (
     <main>
